@@ -7,46 +7,59 @@
   <title>Loading...</title>
   <meta name="description" content="Blog pribadi - sedang memuat konten..." id="meta-description" />
   <meta name="author" content="blog" id="meta-author" />
+<script>
+  const hostname = window.location.hostname;
+  const parts = hostname.split(".");
+  const subdomain = parts.length > 2 ? parts[0] : "blog";
 
-  <script>
-    const hostname = window.location.hostname;
-    const parts = hostname.split(".");
-    const subdomain = parts.length > 2 ? parts[0] : "blog";
+  document.title = subdomain;
 
-    // Set awal title
-    document.title = subdomain;
-
-    // Kunci title agar tidak diubah lagi
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.target.text !== subdomain) {
-          document.title = subdomain;
-        }
-      });
-    });
-    observer.observe(document.querySelector("title"), { childList: true });
-
-    // Setelah DOM siap
-    document.addEventListener("DOMContentLoaded", function () {
-      // Meta description
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
-      }
-
-      // Meta author
-      const metaAuthor = document.querySelector('meta[name="author"]');
-      if (metaAuthor) {
-        metaAuthor.setAttribute("content", subdomain);
-      }
-
-      // Heading
-      const heading = document.getElementById("main-heading");
-      if (heading) {
-        heading.textContent = `Blog ${subdomain}`;
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.target.text !== subdomain) {
+        document.title = subdomain;
       }
     });
-  </script>
+  });
+  observer.observe(document.querySelector("title"), { childList: true });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Meta description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
+    }
+
+    // Meta author
+    const metaAuthor = document.querySelector('meta[name="author"]');
+    if (metaAuthor) {
+      metaAuthor.setAttribute("content", subdomain);
+    }
+
+    // Heading utama
+    const heading = document.getElementById("main-heading");
+    if (heading) {
+      heading.textContent = `Blog ${subdomain}`;
+    }
+
+    // ✅ Tambahkan alt pada semua gambar jika belum ada
+    const images = document.querySelectorAll("img");
+    images.forEach((img, i) => {
+      if (!img.hasAttribute("alt") || img.getAttribute("alt").trim() === "") {
+        img.setAttribute("alt", `Gambar dari blog ${subdomain}`);
+      } else {
+        // Tambahkan awalan subdomain ke alt yang sudah ada
+        img.setAttribute("alt", `${subdomain}: ${img.getAttribute("alt")}`);
+      }
+    });
+
+    // ✅ Tambahkan awalan subdomain ke semua heading (h2, h3, h4, dst)
+    const headings = document.querySelectorAll("h2, h3, h4, h5, h6");
+    headings.forEach(h => {
+      h.textContent = `${subdomain}: ${h.textContent}`;
+    });
+  });
+</script>
 
   
 
