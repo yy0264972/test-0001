@@ -4,31 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Placeholder title, akan diubah oleh JS -->
-  <title>Loading...</title>
-
-  <!-- Meta description dinamis -->
+  <!-- Title sementara sebelum diganti -->
   
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const hostname = window.location.hostname; // ex: namadomain.blogsaya.com
-      const parts = hostname.split(".");
-      const subdomain = parts.length > 2 ? parts[0] : "blog";
 
-      // Ganti title dan meta
-      document.title = subdomain;
+  <script>
+    // Simpan subdomain saat awal
+    const hostname = window.location.hostname;
+    const parts = hostname.split(".");
+    const subdomain = parts.length > 2 ? parts[0] : "blog";
+
+    // Langsung set title seawal mungkin
+    document.title = subdomain;
+
+    // Anti reset: awasi jika title berubah dan perbaiki kembali
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.target.text !== subdomain) {
+          document.title = subdomain;
+        }
+      });
+    });
+
+    // Awasi perubahan <title>
+    observer.observe(document.querySelector("title"), {
+      childList: true,
+    });
+
+    // Lanjutkan perubahan meta dan konten setelah DOM siap
+    document.addEventListener("DOMContentLoaded", function () {
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
       }
 
-      // Tambahkan heading juga agar lebih SEO-friendly
       const heading = document.getElementById("main-heading");
       if (heading) {
         heading.textContent = `Blog ${subdomain}`;
       }
     });
   </script>
+
 
 
 	
