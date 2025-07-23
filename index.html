@@ -8,7 +8,14 @@
   <meta name="description" content="Memuat deskripsi..." id="meta-description" />
   <meta name="author" content="blog" id="meta-author" />
 
-  
+  <script>
+  (function() {
+    const canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    canonical.href = location.protocol + '//' + location.hostname + location.pathname;
+    document.head.appendChild(canonical);
+  })();
+</script>
 
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/favicon.ico" type="image/x-icon">
