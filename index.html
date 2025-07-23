@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Loading...</title>
   <meta name="description" content="Blog pribadi - sedang memuat konten..." id="meta-description" />
   <meta name="author" content="blog" id="meta-author" />
@@ -11,9 +10,7 @@
   const hostname = window.location.hostname;
   const parts = hostname.split(".");
   const subdomain = parts.length > 2 ? parts[0] : "blog";
-
   document.title = subdomain;
-
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.target.text !== subdomain) {
@@ -22,56 +19,38 @@
     });
   });
   observer.observe(document.querySelector("title"), { childList: true });
-
   document.addEventListener("DOMContentLoaded", function () {
-    // Meta description
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
     }
-
-    // Meta author
     const metaAuthor = document.querySelector('meta[name="author"]');
     if (metaAuthor) {
       metaAuthor.setAttribute("content", subdomain);
     }
-
-    // Heading utama
     const heading = document.getElementById("main-heading");
     if (heading) {
       heading.textContent = `Blog ${subdomain}`;
     }
-
-    // ✅ Tambahkan alt pada semua gambar jika belum ada
     const images = document.querySelectorAll("img");
     images.forEach((img, i) => {
       if (!img.hasAttribute("alt") || img.getAttribute("alt").trim() === "") {
         img.setAttribute("alt", `Gambar dari blog ${subdomain}`);
       } else {
-        // Tambahkan awalan subdomain ke alt yang sudah ada
         img.setAttribute("alt", `${subdomain}: ${img.getAttribute("alt")}`);
       }
     });
-
-    // ✅ Tambahkan awalan subdomain ke semua heading (h2, h3, h4, dst)
     const headings = document.querySelectorAll("h2, h3, h4, h5, h6");
     headings.forEach(h => {
       h.textContent = `${subdomain}: ${h.textContent}`;
     });
   });
 </script>
-
-  
-
-
   <meta name="theme-color" content="#ffffff">
-<!-- Icons -->
   <link rel="icon" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/favicon.ico" type="image/x-icon">
   <link rel="icon" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/apple-touch-icon.png">
   <link rel="manifest" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/site.webmanifest">
-
-<!-- Yandex.Metrika -->
   <script type="text/javascript">
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();
@@ -161,21 +140,17 @@
       }
     }
   </style>
-<!-- Google tag (gtag.js) - multiple accounts -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WT93W2845E"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
-
-  // Konfigurasi semua akun Google Analytics
-  gtag('config', 'G-WT93W2845E'); // goblog google
-  gtag('config', 'G-XHCGVT06EJ'); // raisfazriansyah722@gmail.com
-  gtag('config', 'G-L239NSVMTN'); // indrianitresna42@gmail.com
-  gtag('config', 'G-XK27E9HEDZ'); // r.fazriansyah@gmail.com
+  gtag('config', 'G-WT93W2845E'); 
+  gtag('config', 'G-XHCGVT06EJ'); 
+  gtag('config', 'G-L239NSVMTN'); 
+  gtag('config', 'G-XK27E9HEDZ'); 
 </script>
-
-<!-- Google Tag Manager - ninggrai@gmail.com -->
 <script>
 (function(w,d,s,l,i){
   w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
@@ -191,7 +166,7 @@
 <body>
 
 <main>
-  <h2 id="main-heading">Memuat Blog... - Latest Image Gallery</h2>
+  <h2>Latest Image Gallery</h2>
   <section id="indrixFooterGallery"></section>
   <div class="pagination">
     <button onclick="loadPreviousPage()" id="prevBtn" style="display: none;">Previous</button>
@@ -225,24 +200,18 @@
     const base = `https://www.blogger.com/feeds/${blogId}/posts/default`;
     const labelPath = label ? `/-/` + encodeURIComponent(label) : "";
     const url = `${base}${labelPath}?alt=json-in-script&start-index=${startIndex}&max-results=${maxResults}&callback=showIndrixPosts`;
-
     const s = document.createElement("script");
     s.src = url;
     document.body.appendChild(s);
-
-    // Toggle visibility of prev button
     if (startIndex <= 1) {
       prevBtn.style.display = "none";
     } else {
       prevBtn.style.display = "inline-block";
     }
   }
-
   window.showIndrixPosts = function(data) {
     if (!data.feed.entry) return;
-
     container.innerHTML = "";
-
     data.feed.entry.forEach(entry => {
       const content = entry.content?.$t || "";
       const imgMatch = content.match(/<img[^>]+src="([^"]+)"/);
@@ -251,7 +220,6 @@
       const postLabels = entry.category ? entry.category.map(cat => cat.term) : [];
       const labelsHtml = postLabels.map(lab => `<span>${lab}</span>`).join(' ');
       const postUrl = entry.link.find(l => l.rel === "alternate")?.href || "#";
-
       const fig = document.createElement('figure');
       fig.innerHTML = `
         <h3>${title}</h3>
@@ -260,20 +228,16 @@
         </a>
         <span class="indrixLabels">${labelsHtml}</span>
       `;
-
       container.appendChild(fig);
-
       const img = fig.querySelector('img');
       observer.observe(img);
     });
   };
-
   window.loadNextPage = function() {
     startIndex += maxResults;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     fetchPosts();
   };
-
   window.loadPreviousPage = function() {
     if (startIndex > 1) {
       startIndex -= maxResults;
@@ -281,14 +245,11 @@
       fetchPosts();
     }
   };
-
   fetchPosts();
 })();
 </script>
-
 <footer style="text-align: center; padding: 30px 20px; font-size: 14px; color: #666;">
 <center>
-
   <script type="text/javascript">
 	atOptions = {
 		'key' : '84166dfcf092af9e71809d1503a36c61',
@@ -352,7 +313,6 @@
 	};
 </script>
 <script type="text/javascript" src="//www.highperformanceformat.com/add2e8c6881dd33568665625b2425933/invoke.js"></script>
-
 </center>
 <hr /><br />
   <div style="margin-bottom: 10px;">
@@ -363,7 +323,6 @@
   <div>&copy; <span id="current-year"></span> My Blog 0002. All rights reserved.</div>
   <script>document.getElementById("current-year").textContent = new Date().getFullYear();</script>
 </footer>
-
 </body>
 </html>
 
