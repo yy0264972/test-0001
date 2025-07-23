@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Title sementara sebelum diganti -->
-  
+  <title>Loading...</title>
+  <meta name="description" content="Blog pribadi - sedang memuat konten..." id="meta-description" />
+  <meta name="author" content="blog" id="meta-author" />
 
   <script>
-    // Simpan subdomain saat awal
     const hostname = window.location.hostname;
     const parts = hostname.split(".");
     const subdomain = parts.length > 2 ? parts[0] : "blog";
 
-    // Langsung set title seawal mungkin
+    // Set awal title
     document.title = subdomain;
 
-    // Anti reset: awasi jika title berubah dan perbaiki kembali
+    // Kunci title agar tidak diubah lagi
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.target.text !== subdomain) {
@@ -24,19 +24,23 @@
         }
       });
     });
+    observer.observe(document.querySelector("title"), { childList: true });
 
-    // Awasi perubahan <title>
-    observer.observe(document.querySelector("title"), {
-      childList: true,
-    });
-
-    // Lanjutkan perubahan meta dan konten setelah DOM siap
+    // Setelah DOM siap
     document.addEventListener("DOMContentLoaded", function () {
+      // Meta description
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
       }
 
+      // Meta author
+      const metaAuthor = document.querySelector('meta[name="author"]');
+      if (metaAuthor) {
+        metaAuthor.setAttribute("content", subdomain);
+      }
+
+      // Heading
       const heading = document.getElementById("main-heading");
       if (heading) {
         heading.textContent = `Blog ${subdomain}`;
@@ -44,14 +48,9 @@
     });
   </script>
 
+  
 
 
-	
-	
-  
-  
-  
-  <meta name="author" content="${subdomain}">
   <meta name="theme-color" content="#ffffff">
 <!-- Icons -->
   <link rel="icon" href="https://raw.githubusercontent.com/hijiduatilu17plus3/0001/refs/heads/main/favicon.ico" type="image/x-icon">
@@ -179,7 +178,7 @@
 <body>
 
 <main>
-  <h2>My Blog 0002 - Latest Image Gallery</h2>
+  <h2 id="main-heading">Memuat Blog... - Latest Image Gallery</h2>
   <section id="indrixFooterGallery"></section>
   <div class="pagination">
     <button onclick="loadPreviousPage()" id="prevBtn" style="display: none;">Previous</button>
