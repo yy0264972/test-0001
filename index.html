@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Placeholder title, akan diubah oleh JS -->
   <title>Loading...</title>
+
+  <!-- Meta description dinamis -->
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const hostname = window.location.hostname; // contoh: namadomain.blogsaya.com
+      const hostname = window.location.hostname; // ex: namadomain.blogsaya.com
       const parts = hostname.split(".");
+      const subdomain = parts.length > 2 ? parts[0] : "blog";
 
-      // Cek apakah ini subdomain
-      let titleText = parts.length > 2 ? parts[0] : hostname;
+      // Ganti title dan meta
+      document.title = subdomain;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute("content", `Selamat datang di blog ${subdomain}, temukan konten menarik dan terbaru di sini.`);
+      }
 
-      // Ganti title secara dinamis
-      document.title = titleText;
+      // Tambahkan heading juga agar lebih SEO-friendly
+      const heading = document.getElementById("main-heading");
+      if (heading) {
+        heading.textContent = `Blog ${subdomain}`;
+      }
     });
   </script>
+
 
 	
 	
