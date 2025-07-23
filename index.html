@@ -359,13 +359,19 @@
 <script type="text/javascript" src="//www.highperformanceformat.com/add2e8c6881dd33568665625b2425933/invoke.js"></script>
 </center>
 <hr /><br />
-  <div style="margin-bottom: 10px;">
-    <a href="/contact.html" style="margin: 0 10px; text-decoration: none; color: inherit;">Contact</a> |
-    <a href="/privacy-policy.html" style="margin: 0 10px; text-decoration: none; color: inherit;">Privacy Policy</a> |
-    <a href="/terms-and-conditions.html" style="margin: 0 10px; text-decoration: none; color: inherit;">Terms & Conditions</a>
-  </div>
-  <div>&copy; <span id="current-year"></span> <span id="main-heading"></span> All rights reserved.</div>
-  <script>document.getElementById("current-year").textContent = new Date().getFullYear();</script>
+  
+  <div>&copy; <span id="current-year"></span> <span id="main-heading2"></span> All rights reserved.</div>
+  <script>
+    (function() {
+      const domain = window.location.hostname;
+      const parts = domain.split(".");
+      const subdomain = parts.length > 2 ? parts[0] : "blog";
+      const titleCase = subdomain.charAt(0).toUpperCase() + subdomain.slice(1);
+
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+      document.getElementById("main-heading2").textContent = titleCase;
+    })();
+  </script>
 </footer>
 </body>
 </html>
